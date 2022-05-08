@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SqlProductStorageIntegrationTest {
 
-    @Test
+
+
     void itSotreAndLoadProduct() {
         ProductStorage sqlProductStorage = new SqlProductStorage();
         ProductData sampleProduct = thereIsSampleProductData();
