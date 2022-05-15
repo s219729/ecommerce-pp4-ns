@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.jkanclerz.productcatalog.*;
+import pl.jkanclerz.sales.CartStorage;
+import pl.jkanclerz.sales.ProductDetailsProvider;
 import pl.jkanclerz.sales.Sales;
 
 import java.math.BigDecimal;
@@ -17,7 +19,10 @@ public class App {
 
     @Bean
     Sales createSalesComponent() {
-        return new Sales();
+        return new Sales(
+                new CartStorage(),
+                new ProductDetailsProvider()
+        );
     }
 
     @Bean

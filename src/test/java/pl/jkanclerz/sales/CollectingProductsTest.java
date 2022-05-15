@@ -25,11 +25,12 @@ public class CollectingProductsTest {
         String productId = thereIsProduct("lego", BigDecimal.valueOf(10.10));
         String clientId = thereIsClient();
         Sales sales = thereIsSalesModule();
-        sales.addToCart(clientId, productId);
 
+        sales.addToCart(clientId, productId);
         Offer offer = sales.getCurrentOffer(clientId);
 
         assertEquals(BigDecimal.valueOf(10.10), offer.getTotal());
+        assertEquals(1, offer.getItemsCount());
     }
 
     private String thereIsClient() {
@@ -41,7 +42,10 @@ public class CollectingProductsTest {
     }
 
     private Sales thereIsSalesModule() {
-        return new Sales();
+        return new Sales(
+                new CartStorage(),
+                new ProductDetailsProvider()
+        );
     }
 
     @Test
