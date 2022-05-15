@@ -16,7 +16,10 @@ public class CollectingProductsTest {
         Offer offer = sales.getCurrentOffer(clientId);
 
         assertEquals(BigDecimal.ZERO, offer.getTotal());
+        assertEquals(0, offer.getItemsCount());
     }
+
+
     @Test
     void itAllowToAddProduct() {
         String productId = thereIsProduct("lego", BigDecimal.valueOf(10.10));
