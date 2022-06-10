@@ -2,6 +2,7 @@ package pl.jkanclerz.sales;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.jkanclerz.sales.offerting.Offer;
 
 @RestController
 public class SalesController {

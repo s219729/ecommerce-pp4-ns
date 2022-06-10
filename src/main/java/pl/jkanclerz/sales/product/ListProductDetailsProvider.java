@@ -1,9 +1,9 @@
-package pl.jkanclerz.sales;
+package pl.jkanclerz.sales.product;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ListProductDetailsProvider {
+public class ListProductDetailsProvider implements ProductDetailsProvider {
     private List<ProductDetails> availableProducts;
 
     public ListProductDetailsProvider(List<ProductDetails> availableProducts) {
@@ -11,6 +11,7 @@ public class ListProductDetailsProvider {
         this.availableProducts = availableProducts;
     }
 
+    @Override
     public Optional<ProductDetails> getById(String productId) {
         return availableProducts.stream()
                 .filter(productDetails -> productDetails.getProductId().equals(productId))

@@ -1,4 +1,4 @@
-package pl.jkanclerz.sales;
+package pl.jkanclerz.sales.payment;
 
 import java.math.BigDecimal;
 
@@ -36,5 +36,9 @@ public class RegisterPaymentRequest {
 
     public String getEmail() {
         return email;
+    }
+
+    public Integer getTotalAmountAsIntInSubUnit() {
+        return totalAmount.multiply(BigDecimal.valueOf(100)).intValue();
     }
 }

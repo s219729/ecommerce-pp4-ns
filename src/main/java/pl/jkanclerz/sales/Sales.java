@@ -1,28 +1,45 @@
 package pl.jkanclerz.sales;
 
-import java.math.BigDecimal;
+import pl.jkanclerz.sales.cart.Cart;
+import pl.jkanclerz.sales.cart.CartItem;
+import pl.jkanclerz.sales.cart.CartStorage;
+import pl.jkanclerz.sales.offerting.Offer;
+import pl.jkanclerz.sales.offerting.OfferCalculator;
+import pl.jkanclerz.sales.payment.DummyPaymentGateway;
+import pl.jkanclerz.sales.payment.PaymentDetails;
+import pl.jkanclerz.sales.payment.PaymentGateway;
+import pl.jkanclerz.sales.product.ListProductDetailsProvider;
+import pl.jkanclerz.sales.product.ProductDetails;
+import pl.jkanclerz.sales.product.ProductDetailsProvider;
+import pl.jkanclerz.sales.product.ProductNotAvailableException;
+import pl.jkanclerz.sales.reservation.InMemoryReservationStorage;
+import pl.jkanclerz.sales.reservation.Reservation;
+
 import java.util.UUID;
 
 public class Sales {
     private CartStorage cartStorage;
-    private ListProductDetailsProvider productDetailsProvider;
+    private ProductDetailsProvider productDetailsProvider;
 
-    private DummyPaymentGateway paymentGateway;
+    private PaymentGateway paymentGateway;
 
     private InMemoryReservationStorage reservationStorage;
 
-    public Sales(CartStorage cartStorage, ListProductDetailsProvider productDetailsProvider, DummyPaymentGateway paymentGateway, InMemoryReservationStorage reservationStorage) {
+    private OfferCalculator offerCalculator;
+
+    public Sales(CartStorage cartStorage, ProductDetailsProvider productDetailsProvider, PaymentGateway paymentGateway, InMemoryReservationStorage reservationStorage, OfferCalculator offerCalculator) {
         this.cartStorage = cartStorage;
         this.productDetailsProvider = productDetailsProvider;
         this.paymentGateway = paymentGateway;
         this.reservationStorage = reservationStorage;
+        this.offerCalculator = offerCalculator;
     }
 
     public Offer getCurrentOffer(String customerId) {
         Cart cart = cartStorage.getBy(customerId)
                 .orElse(Cart.getEmptyCart());
 
-        return calculateOffer(cart);
+        return offerCalculator.calculateOffer(cart);
     }
 
     public void addToCart(String customerId, String productId) {
@@ -43,7 +60,7 @@ public class Sales {
         Cart cart = cartStorage.getBy(customerId)
                 .orElse(Cart.getEmptyCart());
 
-        Offer currentOffer = calculateOffer(cart);
+        Offer currentOffer = offerCalculator.calculateOffer(cart);
 
         String reservationId = UUID.randomUUID().toString();
 
@@ -55,13 +72,5 @@ public class Sales {
         return new PaymentDetails(reservationId, reservation.getPaymentId(), reservation.getPaymentUrl());
     }
 
-    private Offer calculateOffer(Cart cart) {
-        BigDecimal total = cart.getItems()
-                .stream()
-                .map(cartItem -> cartItem.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())))
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
 
-        return Offer.of(total, cart.itemsCount());
-    }
 }

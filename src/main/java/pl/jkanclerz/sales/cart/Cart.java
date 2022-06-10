@@ -1,4 +1,4 @@
-package pl.jkanclerz.sales;
+package pl.jkanclerz.sales.cart;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,15 @@ package pl.jkanclerz.sales;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.text.html.Option;
+import pl.jkanclerz.sales.cart.CartStorage;
+import pl.jkanclerz.sales.offerting.Offer;
+import pl.jkanclerz.sales.offerting.OfferCalculator;
+import pl.jkanclerz.sales.payment.DummyPaymentGateway;
+import pl.jkanclerz.sales.payment.PaymentDetails;
+import pl.jkanclerz.sales.product.ListProductDetailsProvider;
+import pl.jkanclerz.sales.product.ProductDetails;
+import pl.jkanclerz.sales.reservation.InMemoryReservationStorage;
+import pl.jkanclerz.sales.reservation.Reservation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,7 +82,8 @@ public class OrderingTest {
                 new CartStorage(),
                 new ListProductDetailsProvider(availableProducts),
                 new DummyPaymentGateway(),
-                reservationStorage
+                reservationStorage,
+                new OfferCalculator()
         );
     }
 }

@@ -1,7 +1,6 @@
-package pl.jkanclerz.sales;
+package pl.jkanclerz.sales.offerting;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class Offer {
     private final BigDecimal total;

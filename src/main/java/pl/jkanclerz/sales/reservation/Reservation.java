@@ -1,4 +1,10 @@
-package pl.jkanclerz.sales;
+package pl.jkanclerz.sales.reservation;
+
+import pl.jkanclerz.sales.CustomerData;
+import pl.jkanclerz.sales.payment.DummyPaymentGateway;
+import pl.jkanclerz.sales.payment.PaymentGateway;
+import pl.jkanclerz.sales.payment.RegisterPaymentRequest;
+import pl.jkanclerz.sales.payment.RegisterPaymentResponse;
 
 import java.math.BigDecimal;
 
@@ -24,7 +30,7 @@ public class Reservation {
         return new Reservation(reservationId, totalAmount, customerData.getFname(), customerData.getLname(), customerData.getEmail());
     }
 
-    public void registerPayment(DummyPaymentGateway paymentGateway) {
+    public void registerPayment(PaymentGateway paymentGateway) {
         RegisterPaymentResponse registerPaymentResponse = paymentGateway.register(new RegisterPaymentRequest(
                 id,
                 totalAmount,

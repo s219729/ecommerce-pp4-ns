@@ -2,6 +2,14 @@ package pl.jkanclerz.sales;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.jkanclerz.sales.cart.CartStorage;
+import pl.jkanclerz.sales.offerting.Offer;
+import pl.jkanclerz.sales.offerting.OfferCalculator;
+import pl.jkanclerz.sales.payment.DummyPaymentGateway;
+import pl.jkanclerz.sales.product.ListProductDetailsProvider;
+import pl.jkanclerz.sales.product.ProductDetails;
+import pl.jkanclerz.sales.product.ProductNotAvailableException;
+import pl.jkanclerz.sales.reservation.InMemoryReservationStorage;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -84,7 +92,8 @@ public class CollectingProductsTest {
                 new CartStorage(),
                 new ListProductDetailsProvider(availableProducts),
                 new DummyPaymentGateway(),
-                new InMemoryReservationStorage()
+                new InMemoryReservationStorage(),
+                new OfferCalculator()
         );
     }
 

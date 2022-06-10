@@ -1,4 +1,4 @@
-package pl.jkanclerz.sales;
+package pl.jkanclerz.sales.product;
 
 import java.math.BigDecimal;
 
