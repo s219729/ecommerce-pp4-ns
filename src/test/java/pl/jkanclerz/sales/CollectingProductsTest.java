@@ -82,7 +82,9 @@ public class CollectingProductsTest {
     private Sales thereIsSalesModule() {
         return new Sales(
                 new CartStorage(),
-                new ListProductDetailsProvider(availableProducts)
+                new ListProductDetailsProvider(availableProducts),
+                new DummyPaymentGateway(),
+                new InMemoryReservationStorage()
         );
     }
 
