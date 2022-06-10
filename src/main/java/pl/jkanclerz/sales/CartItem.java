@@ -9,11 +9,10 @@ public class CartItem {
     private int quantity;
 
     public CartItem(String productId, String name, BigDecimal price) {
-
         this.productId = productId;
         this.name = name;
         this.price = price;
-        this.quantity = 0;
+        this.quantity = 1;
     }
 
     public static CartItem of(String productId, String name, BigDecimal price) {

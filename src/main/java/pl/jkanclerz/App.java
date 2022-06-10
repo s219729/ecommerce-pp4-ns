@@ -5,10 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.jkanclerz.productcatalog.*;
 import pl.jkanclerz.sales.CartStorage;
-import pl.jkanclerz.sales.ProductDetailsProvider;
+import pl.jkanclerz.sales.ListProductDetailsProvider;
 import pl.jkanclerz.sales.Sales;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 
 @SpringBootApplication
 public class App {
@@ -21,7 +22,7 @@ public class App {
     Sales createSalesComponent() {
         return new Sales(
                 new CartStorage(),
-                new ProductDetailsProvider()
+                new ListProductDetailsProvider(Collections.emptyList())
         );
     }
 

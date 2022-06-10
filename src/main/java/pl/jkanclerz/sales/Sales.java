@@ -1,13 +1,12 @@
 package pl.jkanclerz.sales;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class Sales {
     private CartStorage cartStorage;
-    private ProductDetailsProvider productDetailsProvider;
+    private ListProductDetailsProvider productDetailsProvider;
 
-    public Sales(CartStorage cartStorage, ProductDetailsProvider productDetailsProvider) {
+    public Sales(CartStorage cartStorage, ListProductDetailsProvider productDetailsProvider) {
         this.cartStorage = cartStorage;
         this.productDetailsProvider = productDetailsProvider;
     }
@@ -29,8 +28,8 @@ public class Sales {
         Cart cart = cartStorage.getBy(customerId)
                 .orElse(Cart.getEmptyCart());
 
-        ProductDetails details = productDetailsProvider
-                .getById(productId);
+        ProductDetails details = productDetailsProvider.getById(productId)
+                        .orElseThrow(ProductNotAvailableException::new);
 
         cart.add(CartItem.of(productId,
                 details.getName(),

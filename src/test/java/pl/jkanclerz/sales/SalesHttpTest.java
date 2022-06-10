@@ -20,8 +20,7 @@ public class SalesHttpTest {
 
     @Test
     void itExposeCurrentOffer() {
-        String url = String.format(
-                "http://localhost:%s/api/sales/current-offer", port);
+        String url = String.format("http://localhost:%s/api/sales/current-offer", port);
 
         ResponseEntity<Offer> r = http.getForEntity(url, Offer.class);
 
